@@ -842,6 +842,16 @@ namespace TQVaultAE.Domain.Entities
 		}
 
 		/// <summary>
+		/// Increment the seed by the given number modulo 0x00007fff 
+		/// </summary>
+		/// <param name="increment">integer to be added to the current seed value</param>
+		/// <returns>New Duplicated item</returns>
+		public void IncreaseItemSeed(int increment)
+		{
+			this.Seed = (this.Seed + increment) % (0x00007fff + 1 );
+		}
+
+		/// <summary>
 		/// Clones the item
 		/// </summary>
 		/// <returns>A new clone of the item</returns>

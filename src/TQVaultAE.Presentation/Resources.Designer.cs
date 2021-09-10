@@ -3083,6 +3083,15 @@ namespace TQVaultAE.Presentation {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Increase item seed by 1000.
+        /// </summary>
+        public static string SackPanelMenuIncrementSeedBy1000 {
+            get {
+                return ResourceManager.GetString("SackPanelMenuIncrementSeedBy1000", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Move Item To.
         /// </summary>
         public static string SackPanelMenuMoveTo {

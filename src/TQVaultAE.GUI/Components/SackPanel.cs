@@ -172,13 +172,14 @@ namespace TQVaultAE.GUI.Components
             // contextMenu
             // 
             this.contextMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(41)))), ((int)(((byte)(31)))));
-            this.contextMenu.Font = new System.Drawing.Font("Albertus MT", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contextMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.contextMenu.Font = new System.Drawing.Font("Albertus MT", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.contextMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
             this.contextMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.contextMenu.Name = "contextMenu";
             this.contextMenu.Opacity = 0.8D;
             this.contextMenu.ShowImageMargin = false;
             this.contextMenu.Size = new System.Drawing.Size(36, 4);
+            this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenu_Opening);
             this.contextMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.ContextMenuItemClicked);
             // 
             // SackPanel
@@ -1364,6 +1365,11 @@ namespace TQVaultAE.GUI.Components
 					{
 						this.contextMenu.Items.Add(Resources.SackPanelMenuDelete);
 						this.contextMenu.Items.Add("-");
+						// Item Editing options
+						if (Config.Settings.Default.AllowItemEdit)
+						{
+							this.contextMenu.Items.Add(Resources.SackPanelMenuIncrementSeedBy1000);
+						}
 					}
 
 					if (focusedItem != null && (this.selectedItems == null || singleSelectionFocused) && !isEquipmentReadOnly)
@@ -2531,6 +2537,29 @@ namespace TQVaultAE.GUI.Components
 					this.DragInfo.MarkModified(newItem);
 					Refresh();
 				}
+				else if (selectedMenuItem == Resources.SackPanelMenuIncrementSeedBy1000)
+				{
+					const int Increment = 1000;
+					// Increase the item seed of the selected items if any
+					if (selectedItems == null)
+					{
+						focusedItem.IncreaseItemSeed(Increment);
+						this.InvalidateItemCacheItemTooltip(focusedItem);
+
+					}
+					// Increase the item seed of the focused item if no items are selected
+					else
+					{
+						foreach (Item item in selectedItems)
+						{
+							item.IncreaseItemSeed(Increment);
+						}
+						this.InvalidateItemCacheItemTooltip(selectedItems.ToArray());
+					}
+					this.Sack.IsModified = true;
+					this.ClearSelection();
+					Refresh();
+				}
 				else if (selectedMenuItem == Resources.SackPanelMenuProperties)
 				{
 					var dlg = this.ServiceProvider.GetService<ItemProperties>();
@@ -3016,6 +3045,11 @@ namespace TQVaultAE.GUI.Components
 
 				base.OnRenderItemText(e);
 			}
+		}
+
+		private void contextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+
 		}
 	}
 }
