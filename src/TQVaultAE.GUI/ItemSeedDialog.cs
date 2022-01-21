@@ -108,7 +108,7 @@ namespace TQVaultAE.GUI
 		{
 			// Get the seed value in the textbox
 			int newSeed;
-			if (int.TryParse(this.itemSeedBox.Text, out newSeed) && newSeed > 0 && newSeed < 0x7fff)
+			if (int.TryParse(this.itemSeedBox.Text, out newSeed) && newSeed > 0 /*&& newSeed < 0x7fff*/)
 			{
 				this.selectedItem.Seed = newSeed;
 				this.selectedItem.IsModified = true;

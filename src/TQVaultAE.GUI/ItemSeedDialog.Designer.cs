@@ -77,7 +77,7 @@ namespace TQVaultAE.GUI
             this.itemSeedBox.Font = new System.Drawing.Font("Albertus MT Light", 14.0625F);
             this.itemSeedBox.Location = new System.Drawing.Point(99, 281);
             this.itemSeedBox.Margin = new System.Windows.Forms.Padding(4);
-            this.itemSeedBox.MaxLength = 5;
+            this.itemSeedBox.MaxLength = 15;
             this.itemSeedBox.Name = "itemSeedBox";
             this.itemSeedBox.Size = new System.Drawing.Size(105, 35);
             this.itemSeedBox.TabIndex = 0;
